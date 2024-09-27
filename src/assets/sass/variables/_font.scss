@@ -1,0 +1,19 @@
+// 引入思源黑體 'Noto Sans TC'
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap");
+// 引入 'Italiana'
+@import url("https://fonts.googleapis.com/css2?family=Italiana&family=Noto+Sans+TC:wght@100..900&display=swap");
+// 引入 'Reem Kufi'
+
+@import url("https://fonts.googleapis.com/css2?family=Reem+Kufi:wght@400..700&display=swap");
+
+@mixin font-R($font-size) {
+  font-size: $font-size;
+  font-weight: 400;
+  letter-spacing: calc(#{$font-size} * 0.04);
+}
+
+@mixin font-B($font-size) {
+  font-size: $font-size;
+  font-weight: 500;
+  letter-spacing: calc(#{$font-size} * 0.04);
+}

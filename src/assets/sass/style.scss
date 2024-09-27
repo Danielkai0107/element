@@ -1,0 +1,25 @@
+@import "./variables/reset";
+@import "./variables/color";
+@import "./variables/font";
+@import "./components/components";
+
+body {
+  font-family: "Noto Sans TC";
+  background-color: $Gray-10;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  width: 100vw;
+  height: 100vh;
+  padding: 12px;
+  overflow-y: scroll;
+}
+.container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}

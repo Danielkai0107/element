@@ -1,0 +1,104 @@
+$white: #ffffff;
+$black: #000000;
+
+//Gray
+$Gray-10: #f4f4f6;
+$Gray-20: #dedee0;
+$Gray-30: #c8c8ca;
+$Gray-40: #b3b3b4;
+$Gray-50: #9d9d9e;
+$Gray-60: #878788;
+$Gray-70: #717172;
+$Gray-80: #5c5c5c;
+$Gray-90: #464646;
+$Gray-100: #303030;
+
+//Primary
+$Primary-10: #f1f6ff;
+$Primary-20: #CEDDFC;
+$Primary-30: #BACDFA;
+$Primary-40: #a5bef7;
+$Primary-50: #90aef4;
+$Primary-60: #7c9ef1;
+$Primary-70: #678eef;
+$Primary-80: #537eec;
+$Primary-90: #3e6ee9;
+$Primary-100: #003fe1;
+
+//Secondary
+$Secondary-10: #fbf6fe;
+$Secondary-20: #f3e2fd;
+$Secondary-30: #ebcffc;
+$Secondary-40: #d4a1f9;
+$Secondary-50: #b270ec;
+$Secondary-60: #914adb;
+$Secondary-70: #6418c3;
+$Secondary-80: #4d11a7;
+$Secondary-90: #390c8c;
+$Secondary-100: #280771;
+
+//Success
+$Success-10: #fbfefc;
+$Success-20: #f0fdf4;
+$Success-30: #dcfce7;
+$Success-40: #bbf7d0;
+$Success-50: #86efac;
+$Success-60: #4ade80;
+$Success-70: #3dc06d;
+$Success-80: #30a25a;
+$Success-90: #238347;
+$Success-100: #238347;
+
+//Warning
+$Warning-10: #fffefa;
+$Warning-20: #fffbeb;
+$Warning-30: #fef3c7;
+$Warning-40: #fde68a;
+$Warning-50: #fcd34d;
+$Warning-60: #fbbf24;
+$Warning-70: #fab71e;
+$Warning-80: #f8af18;
+$Warning-90: #f8af18;
+$Warning-100: #f59e0b;
+
+//Danger
+$Danger-10: #fffafa;
+$Danger-20: #fef2f2;
+$Danger-30: #fee2e2;
+$Danger-40: #fecaca;
+$Danger-50: #fca5a5;
+$Danger-60: #ef4444;
+$Danger-70: #d43030;
+$Danger-80: #dc2626;
+$Danger-90: #c72626;
+$Danger-100: #b91c1c;
+
+//Gradient
+$Gradient-light-blue: linear-gradient(
+  180deg,
+  #7db2ee 0%,
+  rgba(189, 214, 251, 0.4) 100%
+);
+$Gradient-light-purple: linear-gradient(
+  180deg,
+  rgba(100, 24, 195, 0.32) 0%,
+  rgba(100, 24, 195, 0.08) 100%
+);
+$Gradient-light-green: linear-gradient(
+  180deg,
+  rgba(34, 197, 94, 0.32) 0%,
+  rgba(34, 197, 94, 0.08) 100%
+);
+$Gradient-light-orange: linear-gradient(
+  180deg,
+  rgba(245, 158, 11, 0.32) 0%,
+  rgba(245, 158, 11, 0.08) 100%
+);
+$Gradient-light-red: linear-gradient(
+  180deg,
+  rgba(239, 68, 68, 0.32) 0%,
+  rgba(239, 68, 68, 0.08) 100%
+);
+$Gradient-blue: linear-gradient(90deg, #5e72ff 0%, #9495ff 100%);
+$Gradient-purple: linear-gradient(90deg, #927eff 0%, #b999ff 100%);
+$Gradient-purple-pink: linear-gradient(90deg, #c187f6 0%, #f189bd 100%);

@@ -1,0 +1,830 @@
+.table-template {
+  width: 100%;
+  display: flex;
+  padding: 12px 12px 24px 12px;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  align-self: stretch;
+  border-radius: 20px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  @include font-R(0.875rem);
+  //當有 頁碼 時
+  &:has(.el-pagination) {
+    padding: 12px;
+  }
+  .table-frame {
+    width: 100%;
+    // mobile 樣式
+    @media screen and (max-width: 768px) {
+      //欄位標題
+      .el-table {
+        width: 100%;
+        --el-table-row-hover-bg-color: transparent;
+        //當有 checkbox 表頭樣式
+        &:has(.el-table-column--selection, .el-checkbox) {
+          .el-table__header {
+            display: block;
+            margin-bottom: 8px;
+            .el-table__cell {
+              display: none;
+              border: none;
+              &:nth-of-type(1) {
+                display: block;
+                &:has(.el-checkbox) {
+                  &::after {
+                    content: "全選";
+                    position: absolute;
+                    top: 12px;
+                    right: -24px;
+                  }
+                }
+              }
+            }
+          }
+        }
+        .el-table__inner-wrapper {
+          //把 預設的分隔線隱藏
+          &::before {
+            display: none;
+          }
+        }
+        // 表頭
+        .el-table__header {
+          display: none;
+          margin-left: 1px;
+        }
+        // 滾動條 不滑動
+        .el-scrollbar {
+          @include scrollbar-transparent;
+          .el-scrollbar__wrap {
+            overflow: hidden !important;
+          }
+        }
+        // 表內容 單行
+        .el-table__row {
+          margin-left: 1px;
+          border: 1px solid $Gray-30;
+          border-radius: 10px;
+          width: calc(100vw - 52px) !important;
+          display: flex;
+          flex-direction: column;
+          margin-top: 12px;
+          padding-top: 12px;
+          padding-bottom: 8px;
+          position: relative;
+          &:nth-of-type(1) {
+            margin-top: 0;
+          }
+          //當有 checkbox 或是 展開按鈕 上方加 padding
+          &:has(.el-table-column--selection) {
+            padding-top: 50px;
+          }
+          &:has(.el-table__expand-icon) {
+            padding-top: 50px;
+          }
+          //當有下層時 顯示 "更多選項" "收起" 文字
+          &:has(.el-table__expand-icon) {
+            &::before {
+              display: block;
+            }
+            &::after {
+              display: block;
+            }
+          }
+          &:has(.el-table__expand-icon--expanded) {
+            &::before {
+              content: "收起";
+            }
+            &::after {
+              background-color: $Warning-100;
+              right: 75px;
+            }
+          }
+          &::before {
+            display: none;
+            content: "更多選項";
+            text-wrap: nowrap;
+            position: absolute;
+            right: 36px;
+            top: 18px;
+          }
+          &::after {
+            display: none;
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background-color: $Primary-100;
+            text-wrap: nowrap;
+            position: absolute;
+            right: 100px;
+            top: 22px;
+          }
+          //checkbox 位置
+          .el-table-column--selection {
+            position: absolute;
+            top: 5px;
+            border: none;
+          }
+          // 當有選項時 第一個欄位無外框 第二個欄位有上外框
+          &:has(.el-table-column--selection) {
+            .el-table__cell:nth-of-type(1) {
+              border: none;
+            }
+            .el-table__cell:nth-of-type(2) {
+              border-top: 1px solid rgb(235, 238, 245);
+            }
+          }
+          //表內容 欄位
+          .el-table__cell {
+            width: 100%;
+            //預設最後一個選項 無外框
+            &:nth-last-child(1) {
+              border: none;
+            }
+            .cell {
+              display: flex;
+              .checkbox-container {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                flex-wrap: wrap;
+                gap: 12px;
+              }
+              //欄位下拉箭頭 修改
+              .el-table__expand-icon {
+                width: 80px;
+                height: 20px;
+                position: absolute;
+                top: -38px;
+                right: 4px;
+                display: flex;
+                justify-content: flex-end;
+                transform: none;
+                &::before {
+                  content: "";
+                  width: 1rem;
+                  height: 1rem;
+                  position: absolute;
+                  background-image: url("/src/assets/images/icon-arrow-down.svg");
+                  background-position: center;
+                  background-size: cover;
+                  background-repeat: no-repeat;
+                  transition: all 0.4s;
+                }
+                svg {
+                  display: none;
+                }
+                &.el-table__expand-icon--expanded {
+                  &::before {
+                    rotate: 180deg;
+                  }
+                }
+              }
+              //欄位縮排空格 隱藏
+              .el-table__placeholder {
+                display: none;
+              }
+              //欄位縮排空格 隱藏
+              .el-table__indent {
+                padding: 0 !important;
+              }
+              .table-rwd-label {
+                min-width: 40%;
+                display: flex;
+                align-items: center;
+                margin-right: 12px;
+                font-weight: 500;
+                color: $Gray-100 !important;
+              }
+            }
+          }
+        }
+        //表內容 1 層級樣式
+        .el-table__row--level-1 {
+          background-color: rgb(241, 246, 255);
+          margin-top: -8px;
+          padding-bottom: 8px;
+          border-radius: 0 0 10px 10px;
+          .table-rwd-label {
+            padding-left: 20px;
+          }
+          &:not(:has(.el-checkbox, .el-table__expand-icon)) {
+            padding-top: 12px;
+          }
+        }
+      }
+    }
+
+    // PC 樣式
+    .el-table {
+      .table-rwd-label {
+        display: none;
+      }
+      .el-table__header {
+        th {
+          .cell {
+            color: $Gray-100;
+          }
+        }
+      }
+      .el-table__row {
+        td {
+          .cell {
+            display: flex;
+            color: $Gray-90;
+            .checkbox-container {
+              display: flex;
+              flex-wrap: wrap;
+              gap: 12px;
+              .el-checkbox {
+                border-radius: 6px;
+                padding: 0 8px;
+              }
+            }
+            .el-table__expand-icon {
+              margin-top: 5px;
+            }
+            .icon-edit {
+              width: 28px;
+              height: 28px;
+              background-image: url("/src/assets/images/icon-edit.svg");
+              background-position: center;
+              background-size: cover;
+              background-repeat: no-repeat;
+              cursor: pointer;
+              transition: all 0.6s;
+              &:active {
+                scale: 0;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.el-pagination {
+  padding: 12px 0;
+  gap: 12px;
+  .btn-prev {
+    border-radius: 100px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.6s;
+    &:active {
+      scale: 0;
+    }
+  }
+  .btn-next {
+    border-radius: 100px;
+    border: 1px solid #e5e7eb;
+    background: #fff;
+    box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: all 0.6s;
+    &:active {
+      scale: 0;
+    }
+  }
+  button:hover {
+    color: $Gray-50;
+  }
+  .el-pager {
+    gap: 2px;
+    .number {
+      padding: 0;
+      width: 24px;
+      @include font-B(0.75rem);
+      color: #000;
+      padding-left: 1px;
+      padding-bottom: 2px;
+    }
+    li:hover {
+      color: $Gray-50;
+    }
+    li.is-active {
+      border-radius: 24px;
+      color: #fff;
+      background-color: $Primary-100;
+    }
+  }
+}
+
+.el-checkbox {
+  @include font-R(0.875rem);
+  margin: 0;
+  &.is-bordered.el-checkbox--large {
+    border-radius: 10px;
+    background-color: #fff;
+    .el-checkbox__inner {
+      width: 14px !important;
+      height: 14px !important;
+      border-radius: 14px;
+      background-color: transparent;
+    }
+    &.is-checked {
+      border: 1px solid #fff;
+      background-color: $Primary-100;
+      .el-checkbox__label {
+        color: #fff;
+      }
+      .el-checkbox__inner {
+        &::after {
+          width: 1rem;
+          height: 1rem;
+        }
+      }
+    }
+  }
+  &:has(.is-focus) {
+    .el-checkbox__inner {
+      border-color: transparent;
+    }
+  }
+  &:has(.is-checked) {
+    .el-checkbox__inner {
+      background-color: $Primary-100;
+      border-color: transparent;
+      &::after {
+        content: "";
+        width: 12px;
+        height: 12px;
+        border-color: transparent;
+        position: absolute;
+        top: 54% !important;
+        left: 54% !important;
+        transform: translate(-50%, -50%) !important;
+        z-index: 20;
+        background-image: url("/src/assets/images/icon-checked.svg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+    .el-checkbox__label {
+      color: $Gray-80;
+    }
+  }
+  &:has(.is-indeterminate) {
+    .el-checkbox__inner {
+      background-color: transparent;
+      border-color: $Gray-40;
+    }
+  }
+  &.yellowTag {
+    background-color: $Warning-30;
+  }
+  .el-checkbox__inner {
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 4px;
+    border-color: $Gray-40;
+  }
+  .el-checkbox__label {
+    color: $Gray-80;
+    width: 120px;
+    text-wrap: wrap;
+    line-height: 20px;
+  }
+}
+
+.el-switch {
+  --el-switch-on-color: #003fe1;
+  --el-switch-off-color: #dcdfe6;
+  &.is-checked {
+    .el-switch__inner {
+      .is-text {
+        color: #fff;
+      }
+    }
+  }
+  .el-switch__inner {
+    .is-text {
+      color: $Gray-80;
+    }
+  }
+}
+
+.el-input {
+  @include font-R(0.875rem);
+  --el-input-focus-border-color: #003fe1;
+  .el-input__wrapper {
+    height: 38px;
+    padding: 1px 12px;
+    border-radius: 10px;
+    .el-input__inner {
+      height: 40px;
+      color: $Gray-100;
+      @include font-R(0.875rem);
+    }
+  }
+}
+
+.el-textarea {
+  @include font-R(0.875rem);
+  --el-input-focus-border-color: #003fe1;
+  .el-textarea__inner {
+    border-radius: 10px;
+  }
+}
+
+.el-popper {
+  @include font-R(0.875rem);
+  .el-date-picker {
+    --el-datepicker-active-color: #003fe1;
+    --el-datepicker-hover-text-color: #003fe1;
+  }
+}
+
+.label-input {
+  @include font-R(0.875rem);
+  display: flex;
+  gap: 12px;
+  &.row {
+    align-items: center;
+  }
+  &.column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  &.row-pop {
+    align-items: center;
+    p {
+      width: 84px;
+    }
+  }
+  &.column-pop {
+    flex-direction: column;
+    align-items: flex-start;
+    p {
+      width: 84px;
+    }
+  }
+  p {
+    text-wrap: nowrap;
+    @include font-R(0.875rem);
+  }
+}
+
+.el-form {
+  @include font-R(0.875rem);
+  border: 1px solid blue;
+  .el-form-item {
+    margin-bottom: 28px;
+  }
+}
+
+.el-select {
+  @include font-R(0.875rem);
+  .el-select__wrapper {
+    height: 38px;
+    padding: 1px 12px;
+    border-radius: 10px;
+    &.is-focused {
+      box-shadow: 0 0 0 1px $Primary-100 inset;
+    }
+  }
+}
+
+.el-popper.el-select__popper {
+  border-radius: 10px !important;
+}
+
+.el-scrollbar {
+  border-radius: 10px !important;
+  .el-select-dropdown__item {
+    margin: 4px 0;
+    border-radius: 8px;
+    &:hover {
+      background-color: $Primary-10;
+    }
+  }
+  .el-select-dropdown__item.is-selected {
+    color: $Primary-100;
+    font-weight: normal;
+  }
+}
+
+.account-statusTag {
+  width: 50px;
+  height: 24px;
+  position: relative;
+  &::after {
+    content: "";
+    width: 1rem;
+    height: 1rem;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translate(0, -50%);
+    z-index: 20;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  &::before {
+    position: absolute;
+    left: 20px;
+  }
+  &.onTag {
+    &::before {
+      content: "ON";
+    }
+    &::after {
+      background-image: url("/src/assets/images/icon-account-on.svg");
+    }
+  }
+  &.offTag {
+    &::before {
+      content: "OFF";
+    }
+    &::after {
+      background-image: url("/src/assets/images/icon-account-off.svg");
+    }
+  }
+}
+
+.navbar {
+  width: 240px;
+  @include font-R(0.875rem);
+  h5 {
+    font-family: "Reem Kufi", sans-serif;
+    font-size: 1.5rem;
+    padding: 20px 20px 40px 20px;
+    background-color: #fff;
+    border-right: 1px solid rgb(220, 223, 230);
+  }
+  .el-menu {
+    --el-menu-hover-bg-color: #fff !important;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .el-sub-menu__title {
+      height: 44px;
+    }
+    .el-menu-item {
+      height: 44px;
+      color: $Gray-90;
+      &:hover {
+        background-color: transparent !important; /* 懸停時的背景顏色 */
+      }
+      &.is-active {
+        @include font-B(0.875rem);
+        color: $Primary-100;
+        @include font-B(0.875rem);
+        .icon-nav {
+          filter: brightness(0) saturate(100%) invert(28%) sepia(100%)
+            saturate(800%) hue-rotate(200deg);
+        }
+        &::after {
+          content: "";
+          width: 3px;
+          height: 100%;
+          background-color: $Primary-100;
+          border-radius: 0 3px 3px 0;
+          position: absolute;
+          top: 50%;
+          left: 0;
+          transform: translate(0%, -50%);
+        }
+      }
+    }
+    .el-sub-menu {
+      .el-icon {
+        width: 1rem;
+        height: 1rem;
+        display: block;
+        background-image: url("/src/assets/images/icon-nav-arrow-gray.svg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        svg {
+          display: none;
+        }
+      }
+      &.is-opened {
+        .el-sub-menu__title {
+          margin-bottom: 10px;
+        }
+      }
+      &:has(.is-active) {
+        .el-sub-menu__title {
+          color: $Primary-100;
+          .icon-nav {
+            filter: brightness(0) saturate(100%) invert(28%) sepia(100%)
+              saturate(800%) hue-rotate(200deg);
+          }
+          .el-icon {
+            width: 1rem;
+            height: 1rem;
+            display: block;
+            background-image: url("/src/assets/images/icon-nav-arrow-blue.svg");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+            svg {
+              display: none;
+            }
+          }
+          @include font-B(0.875rem);
+          &::after {
+            content: "";
+            width: 3px;
+            height: 100%;
+            background-color: $Primary-100;
+            border-radius: 0 3px 3px 0;
+            position: absolute;
+            top: 50%;
+            left: 0;
+            transform: translate(0%, -50%);
+          }
+        }
+      }
+      .el-menu-item {
+        margin: 0 20px;
+        border-radius: 10px;
+        &.is-active {
+          background-color: $Primary-10;
+          color: $Gray-100;
+          &::after {
+            content: "";
+            width: 4px;
+            height: 4px;
+            border-radius: 6px;
+            background-color: $Gray-100;
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translate(0%, -50%);
+            z-index: 20;
+            background-image: url("");
+            background-position: center;
+            background-size: cover;
+            background-repeat: no-repeat;
+          }
+          &:hover {
+            background-color: $Primary-10 !important;
+          }
+        }
+      }
+    }
+  }
+}
+
+.icon-nav {
+  width: 18px;
+  height: 18px;
+  display: block;
+  margin-right: 16px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  &.system {
+    background-image: url("/src/assets/images/icon-system.svg");
+  }
+  &.lesson {
+    background-image: url("/src/assets/images/icon-lesson.svg");
+  }
+  &.chart {
+    background-image: url("/src/assets/images/icon-chart-regular.svg");
+  }
+}
+.el-badge {
+  .el-badge__content {
+    background-color: $Primary-100;
+    border: 1px solid #fff;
+    padding-bottom: 2px;
+    transform: translateX(80%);
+  }
+}
+
+.btn-navbar-circle {
+  display: flex;
+  width: 36px;
+  height: 36px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 40px;
+  border: 1px solid $Gray-20;
+  background-color: #fff;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.6s;
+  &:active {
+    scale: 0;
+  }
+  &::after {
+    content: "";
+    width: 16px;
+    height: 16px;
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+  &.msg {
+    &::after {
+      background-image: url("/src/assets/images/icon-msg.svg");
+      transform: translateX(0.5px) translateY(1px);
+    }
+  }
+  &.bell {
+    &::after {
+      background-image: url("/src/assets/images/icon-bell.svg");
+    }
+  }
+}
+
+.asideBar {
+  display: flex;
+  gap: 32px;
+  justify-content: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  padding: 8px 20px;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  &.bgc-w {
+    border-bottom: 1px solid #e5e7eb;
+    background: #fff;
+  }
+  &.bgc-1 {
+    background-image: url("/src/assets/images/aside-bar-1.png");
+  }
+  &.bgc-2 {
+    background-image: url("/src/assets/images/aside-bar-2.png");
+  }
+  &.bgc-3 {
+    background-image: url("/src/assets/images/aside-bar-3.png");
+  }
+  .el-menu {
+    background-color: transparent;
+    border: none;
+    height: 38px;
+    .el-sub-menu {
+      padding: 0;
+      &.is-active {
+        .el-sub-menu__title {
+          border: none;
+        }
+      }
+    }
+    .el-sub-menu__title {
+      padding: 0;
+      box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.1);
+      border-radius: 40px;
+      &:hover {
+        background-color: transparent;
+      }
+      cursor: pointer;
+      transition: all 0.6s;
+      &:active {
+        scale: 0;
+      }
+      .el-icon {
+        display: none;
+      }
+    }
+  }
+}
+.el-popper {
+  --el-menu-active-color: #303030;
+  --el-menu-hover-text-color: #303030;
+  --el-menu-hover-bg-color: #f1f6ff;
+  border-radius: 20px;
+  overflow: hidden;
+  .el-menu-item {
+    margin: 12px;
+    border-radius: 10px;
+    &:last-of-type {
+      margin-top: 24px;
+      &::after {
+        content: "";
+        width: 100%;
+        height: 1px;
+        border: 1px solid $Gray-20;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 20;
+        background-image: url("");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+      }
+    }
+    &.is-active {
+      --el-menu-hover-bg-color: #f1f6ff;
+      @include font-B(0.875rem);
+      background-color: $Primary-10;
+    }
+  }
+}
